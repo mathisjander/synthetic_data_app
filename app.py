@@ -31,11 +31,16 @@ def main():
 
     st.title("Synthetic Sensor Data Generator")
 
-    st.write("This is a simple example of using Streamlit to create a Synthetic Sensor Data Generator.")
+    st.write("""This is a proof of concept for using Streamlit to create a Synthetic Sensor Data Generator. 
+             \nThe assessment should be considered indicative and further validation for a specific use case is likely required.
+             \nThe TimeGAN implementation is based on the paper: xxx""")
 
 
     st.divider()
     st.subheader("Upload the real data to be used for the synthetic data generation")
+    st.write("""The data should be in csv format and have the following structure: 
+             \nn * m
+             \nWith n as the number of rows/obersvations in a fixed interval and m as the number of columns/sensor measurings for the given observation.""")
     # upload csv file
 
     uploaded_file = st.file_uploader("Choose a file")
@@ -314,8 +319,6 @@ def main():
             test_labels = np.concatenate((np.ones(n_test),
                                         np.zeros(n_test)))
             
-            st.write('The shape of the train data is ', train_data.shape)
-            
             # create classifier
 
             ts_classifier = Sequential([GRU(n_seq, input_shape=(seq_len, 3), name='GRU'),
@@ -452,16 +455,6 @@ def main():
 
         st.write('Assessing usefulness: The synthetic data should be as useful as the real data for training a predictor.')
         st.pyplot(plt)
-
-
-
-
-
-
-
-
-
-
 
 
 
