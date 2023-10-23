@@ -5,7 +5,6 @@ seaborn
 numpy
 scikit-learn
 tensorflow
-pickle
 pathlib
 tqdm
 pip
