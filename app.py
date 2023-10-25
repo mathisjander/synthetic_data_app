@@ -29,11 +29,11 @@ from sklearn.manifold import TSNE
 
 def main():
 
-    st.title("Synthetic Sensor Data Generator")
+    st.title("Synthetic Time Series Data Generator")
 
     st.write("""This is a proof of concept for using Streamlit to create a Synthetic Sensor Data Generator. 
-             \nThe assessment should be considered indicative and further validation for a specific use case is likely required.
-             \nThe TimeGAN implementation is based on the paper: xxx""")
+             \nThe assessment should be considered indicative and further validation for a specific use case is likely required.""")
+    st.markdown("""The TimeGAN implementation is based on a paper by Jinsung Yoon, Daniel Jarrett, and Mihaela van der Schaar: [Time-series Generative Adversarial Networks](https://papers.nips.cc/paper/8789-time-series-generative-adversarial-networks), Neural Information Processing Systems (NeurIPS), 2019.""")
 
 
     st.divider()
