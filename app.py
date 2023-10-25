@@ -52,7 +52,7 @@ def main():
         st.divider()
         st.subheader("Display of the uploaded data")
 
-        st.write(f"Shape of the dataframe: 20{dataframe.shape[0]}, {dataframe.shape[1]}")
+        st.write(f"Shape of the dataframe: {dataframe.shape[0]}, {dataframe.shape[1]}")
         st.dataframe(dataframe)
 
         # plot the uploaded data
@@ -131,7 +131,7 @@ def main():
         st.write('The discriminator loss is ', step_d_loss)
         st.write('The unsupervised generator loss is ', step_g_loss_u)
         st.write('The supervised generator loss is ', step_g_loss_s)
-        st.write('The v-generator loss is ', step_g_loss_v)
+        st.write('The generator moment loss is ', step_g_loss_v)
         st.write('The embedder loss is ', step_e_loss_t0)
 
         # download the model
@@ -260,21 +260,21 @@ def main():
 
             return pca_result, tsne_result
         
-        pca_result, tsne_result = pca_tsne(real_sample_2d, synthetic_sample_2d)
+        pca_results, tsne_results = pca_tsne(real_sample_2d, synthetic_sample_2d)
         
 
         # plot the results
 
         fig, axes = plt.subplots(ncols=2, figsize=(14, 5))
 
-        sns.scatterplot(x='1st Component', y='2nd Component', data=pca_result,
+        sns.scatterplot(x='1st Component', y='2nd Component', data=pca_results,
                         hue='Data', style='Data', ax=axes[0])
         sns.despine()
         axes[0].set_title('PCA Result')
 
 
         sns.scatterplot(x='X', y='Y',
-                        data=tsne_result,
+                        data=tsne_results,
                         hue='Data', 
                         style='Data', 
                         ax=axes[1])
@@ -296,7 +296,7 @@ def main():
         # implement classifier
 
         @st.cache_data
-        def classification(real_data, generated_data):
+        def classification(real_data, generated_data, n_seq):
 
             # make sure data is np array
             real_data = np.array(real_data)
@@ -321,7 +321,7 @@ def main():
             
             # create classifier
 
-            ts_classifier = Sequential([GRU(n_seq, input_shape=(seq_len, 3), name='GRU'),
+            ts_classifier = Sequential([GRU(n_seq, input_shape=(seq_len, n_seq), name='GRU'),
                             Dense(1, activation='sigmoid', name='OUT')],
                            name='Time_Series_Classifier')
             
@@ -345,7 +345,7 @@ def main():
 
             return history
         
-        history = classification(real_data, generated_data)
+        history = classification(real_data, generated_data, n_seq)
 
         # plot the results
         sns.set_style('white')
