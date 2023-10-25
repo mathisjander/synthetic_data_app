@@ -128,11 +128,11 @@ def main():
         # write the loss
         st.divider()
         st.subheader("Losses")
-        st.write('The discriminator loss is ', step_d_loss)
-        st.write('The unsupervised generator loss is ', step_g_loss_u)
-        st.write('The supervised generator loss is ', step_g_loss_s)
-        st.write('The generator moment loss is ', step_g_loss_v)
-        st.write('The embedder loss is ', step_e_loss_t0)
+        st.write('The discriminator loss is ', step_d_loss.numpy())
+        st.write('The unsupervised generator loss is ', step_g_loss_u.numpy())
+        st.write('The supervised generator loss is ', step_g_loss_s.numpy())
+        st.write('The generator moment loss is ', step_g_loss_v.numpy())
+        st.write('The embedder loss is ', step_e_loss_t0.numpy())
 
         # download the model
 
