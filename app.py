@@ -94,9 +94,9 @@ def main():
         batch_size = int(batch_size)
         st.write('The defined batch size is ', batch_size)
 
-        hidden_dim = st.number_input('Define number of hidden dims')
+        hidden_dim = st.number_input('Define number of hidden dimensions')
         hidden_dim = int(hidden_dim)
-        st.write('The defined number of hidden dims is ', hidden_dim)
+        st.write('The defined number of hidden dimensions is ', hidden_dim)
 
         num_layers = st.number_input('Define number of hidden layers')
         num_layers = int(num_layers)
