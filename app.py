@@ -67,7 +67,6 @@ def main():
         for ax in axes.flatten():
             ax.set_xlabel('')
 
-        plt.suptitle('Scaled Time Series')
         plt.gcf().tight_layout()
         sns.despine()
 
