@@ -29,6 +29,8 @@ from sklearn.manifold import TSNE
 
 def main():
 
+    # title and description
+
     st.title("Synthetic Time Series Data Generator")
 
     st.write("""This is a proof of concept for using Streamlit to create a Synthetic Sensor Data Generator. 
@@ -41,6 +43,7 @@ def main():
     st.write("""The data should be in csv format and have the following structure: 
              \nn * m
              \nWith n as the number of rows/obersvations in a fixed interval and m as the number of columns/sensor measurings for the given observation.""")
+    
     # upload csv file
 
     uploaded_file = st.file_uploader("Choose a file")
@@ -93,14 +96,17 @@ def main():
         batch_size = int(batch_size)
         st.write('The defined batch size is ', batch_size)
 
+        # define hiddem dims
         hidden_dim = st.number_input('Define number of hidden dimensions')
         hidden_dim = int(hidden_dim)
         st.write('The defined number of hidden dimensions is ', hidden_dim)
 
+        # define num layers
         num_layers = st.number_input('Define number of hidden layers')
         num_layers = int(num_layers)
         st.write('The defined number of hidden layers is ', num_layers)
 
+        # define train steps
         train_steps = st.number_input('Define number of train steps')
         train_steps = int(train_steps)
         st.write('The defined number of train steps is ', train_steps)
@@ -109,7 +115,7 @@ def main():
         st.write('The defined gamma is ', np.round(gamma,2))
 
 
-            ### timegan instance
+        ### timegan instance
 
         @st.cache_resource
         def train_model(dataframe, seq_len, n_seq, batch_size, hidden_dim, num_layers, train_steps, gamma):
@@ -153,7 +159,6 @@ def main():
         
         # generate data
         st.subheader("Generated synthetic data")
-        # click button to generate data
 
         # speficify number of windows
         n_windows = st.number_input('Define number of samples to generate')
@@ -165,11 +170,14 @@ def main():
             while True:
                 yield np.random.uniform(low=0, high=1, size=(seq_len, n_seq))
 
+        
+        # generate random series
         random_series = iter(tf.data.Dataset
                         .from_generator(make_random_data, output_types=tf.float32)
                         .batch(batch_size)
                         .repeat())
 
+        # transform generated series into synthetic data
         generated_data = []
         for i in range(int(n_windows / batch_size)):
             Z_ = next(random_series)
@@ -219,7 +227,6 @@ def main():
 
             df['sample_id'] = sample_ids
 
-            # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
 
         csv = convert_array_to_csv(generated_data, n_windows, seq_len)
@@ -231,8 +238,11 @@ def main():
             mime='text/csv')
         
         st.divider()
-        st.subheader("Assessment of Quality of Generated Data")
 
+        # assessment section
+        st.subheader("Assessment of Quality of Generated Data")
+        
+        # function for pca and tsne
         @st.cache_data
         def pca_tsne(real_sample, synthetic_sample):
             # PCA
