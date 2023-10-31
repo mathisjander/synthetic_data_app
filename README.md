@@ -1,5 +1,9 @@
 # synthetic_data_app
-This repository holds the files required for running the synthetic data app prototype as well as the datasets used to test it. Below you can find a short description of each file.
+This repository holds the files required for running the synthetic data app prototype as well as the datasets used to test it. 
+
+The accompanying report can be found [here](https://www.researchgate.net/publication/375004790_Proof_of_Concept_for_a_Synthetic_Time_Series_Data_Generation_Application).
+
+Below you can find a short description of each file.
 
 app.py - Code to run the streamlit application
 
